@@ -67,7 +67,7 @@ lig_dict = {
 }
 
 
-def get_info_from_smi(smi):
+def get_info_from_smi(smi, radius):
     """Main function for extracting relevant reaction conditions and generating the 2D and 3D molecular graphs given a SMILES-string.
 
     :param smi: SMILES-string
@@ -137,7 +137,6 @@ def get_info_from_smi(smi):
     charges = QMLMODEL(qml_graph).unsqueeze(1).detach().numpy()
 
     # get edges for 3d graph
-    radius = 4  # 5.29177 = 10 a0
     edge1 = []
     edge2 = []
     for i in range(len(atomids)):
@@ -147,8 +146,6 @@ def get_info_from_smi(smi):
                 if dist <= radius:
                     edge1.append(i)
                     edge2.append(j)
-                    edge1.append(j)
-                    edge2.append(i)
 
     edge_3d = torch.from_numpy(np.array([edge1, edge2]))
 
@@ -214,7 +211,7 @@ if __name__ == "__main__":
                     edge_3d,
                     crds_3d,
                     ecfp4_2,
-                ) = get_info_from_smi(educt[idx])
+                ) = get_info_from_smi(educt[idx], 4)
 
                 rgnt_id = rea_dict[reagent[idx]]
                 lgnd_id = lig_dict[ligand[idx]]

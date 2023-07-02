@@ -153,7 +153,7 @@ ls modules/
 gmt.py  gnn_blocks.py  pygdataset.py
 ```
 
-## 110. License
+## 10. License
 The software was developed at ETH Zurich and is licensed by the user-friendy MIT license, i.e. discribed in `LICENSE`.
 ```
 Copyright (©) 2023 Kenneth Atz (ETH Zurich)

@@ -28,7 +28,7 @@ ATOMTYPE_DICT = get_dict_for_embedding(ATOMTYPES)
 QML_ATOMTYPE_DICT = get_dict_for_embedding(QML_ATOMTYPES)
 
 
-def get_info_from_smi(smi, randomseed):
+def get_info_from_smi(smi, randomseed, radius):
     """Main function for extracting relevant reaction conditions and generating the 2D and 3D molecular graphs given a SMILES-string and a seed for 3D conformer generation.
 
     :param smi: SMILES-string
@@ -97,7 +97,6 @@ def get_info_from_smi(smi, randomseed):
     charges = QMLMODEL(qml_graph).unsqueeze(1).detach().numpy()
 
     # Get edges for 3d graph
-    radius = 4  # 5.29177 = 10 a0
     edge1 = []
     edge2 = []
     for i in range(len(atomids)):
@@ -107,8 +106,6 @@ def get_info_from_smi(smi, randomseed):
                 if dist <= radius:
                     edge1.append(i)
                     edge2.append(j)
-                    edge1.append(j)
-                    edge2.append(i)
 
     edge_3d = torch.from_numpy(np.array([edge1, edge2]))
 
@@ -199,7 +196,7 @@ if __name__ == "__main__":
                 edge_2d_a,
                 edge_3d_a,
                 crds_3d_a,
-            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00A)
+            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00A, 4)
 
             (
                 atom_id_b,
@@ -210,7 +207,7 @@ if __name__ == "__main__":
                 edge_2d_b,
                 edge_3d_b,
                 crds_3d_b,
-            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00B)
+            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00B, 4)
 
             (
                 atom_id_c,
@@ -221,7 +218,7 @@ if __name__ == "__main__":
                 edge_2d_c,
                 edge_3d_c,
                 crds_3d_c,
-            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00C)
+            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00C, 4)
 
             (
                 atom_id_d,
@@ -232,7 +229,7 @@ if __name__ == "__main__":
                 edge_2d_d,
                 edge_3d_d,
                 crds_3d_d,
-            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00D)
+            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00D, 4)
 
             (
                 atom_id_e,
@@ -243,7 +240,7 @@ if __name__ == "__main__":
                 edge_2d_e,
                 edge_3d_e,
                 crds_3d_e,
-            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00E)
+            ) = get_info_from_smi(unique_substraes[rxn_key], 0xF00E, 4)
 
             # Substrate ID
             lsf_container1.create_group(rxn_key)

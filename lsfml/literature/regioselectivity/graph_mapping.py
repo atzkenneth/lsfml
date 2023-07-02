@@ -54,7 +54,7 @@ def get_rms(smi, patt, repl):
     return rms
 
 
-def get_regioselectivity(rms, seed):
+def get_regioselectivity(rms, seed, radius):
     """Main function to generate the 2D and 3D molecular graphs and to extract the reagioselectivity given a SMILES-string and a seed for 3D conformer generation.
 
     :param rms: SMILES-string
@@ -141,7 +141,6 @@ def get_regioselectivity(rms, seed):
     charges = QMLMODEL(qml_graph).unsqueeze(1).detach().numpy()
 
     # Get edges for 3d graph
-    radius = 4  # 5.29177 = 10 a0
     edge1 = []
     edge2 = []
     for i in range(len(atomids)):
@@ -151,8 +150,6 @@ def get_regioselectivity(rms, seed):
                 if dist <= radius:
                     edge1.append(i)
                     edge2.append(j)
-                    edge1.append(j)
-                    edge2.append(i)
 
     edge_3d = torch.from_numpy(np.array([edge1, edge2]))
 
@@ -217,7 +214,7 @@ if __name__ == "__main__":
                         crds_3d,
                         pot_trg,
                         reg_trg,
-                    ) = get_regioselectivity(rms, 0xF10D)
+                    ) = get_regioselectivity(rms, 0xF10D, 4)
 
                     # Create group in h5 for this id
                     lsf_container.create_group(str(rxn_key))
