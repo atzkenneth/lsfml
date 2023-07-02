@@ -1,5 +1,5 @@
 ---
-name: gt
+name: lsfml
 channels:
   - pytorch
   - conda-forge
@@ -8,10 +8,8 @@ channels:
   - nvidia
 dependencies:
   - python =3.8
-  # additional dependencies
-  - numpy =<1.20 # numpy version lock, crucial for MLops packages installed via poetry 
-  - libcurl # avoid issues with libcurl version mismatch
-  # pytorch
+  - numpy =<1.20 
+  - libcurl
   - pytorch =1.13.1
   - cudatoolkit =11.7
   - torchvision =0.14.1
