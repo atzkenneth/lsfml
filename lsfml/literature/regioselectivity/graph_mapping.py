@@ -3,7 +3,7 @@
 #
 # Copyright (©) 2023 Kenneth Atz (ETH Zurich)
 
-import h5py
+import h5py, os
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -15,11 +15,10 @@ from torch_geometric.utils import add_self_loops
 from torch_geometric.utils.undirected import to_undirected
 from tqdm import tqdm
 
-from lsfqml.lsfqml.publication.qml.prod import get_model
-from lsfqml.lsfqml.publication.utils import get_dict_for_embedding, AROMATOCITY, IS_RING, QML_ATOMTYPES
+from lsfml.qml.prod import get_model
+from lsfml.utils import get_dict_for_embedding, AROMATOCITY, IS_RING, QML_ATOMTYPES, UTILS_PATH
 
 QMLMODEL = get_model(gpu=False)
-
 
 HYBRIDISATION_DICT = {"SP3": 0, "SP2": 1, "SP": 2, "UNSPECIFIED": 3, "S": 3}
 AROMATOCITY_DICT = get_dict_for_embedding(AROMATOCITY)
@@ -174,7 +173,7 @@ def get_regioselectivity(rms, seed):
 if __name__ == "__main__":
 
     # Read csv
-    df = pd.read_csv("../../data/literature_rxndata.csv", encoding="unicode_escape")
+    df = pd.read_csv(os.path.join(UTILS_PATH, "data/literature_rxndata.csv"), encoding="unicode_escape")
     smiles = list(df["product_1_smiles"])
     rxn_yield = list(df["product_1_yield"])
 
@@ -195,8 +194,9 @@ if __name__ == "__main__":
     rxn_key = 0
 
     all_smiles = []
+    h5_path = os.path.join(UTILS_PATH, "data/literature_regio.h5")
 
-    with h5py.File("../../data/literature_regio.h5", "w") as lsf_container:
+    with h5py.File(h5_path, "w") as lsf_container:
 
         for smi in tqdm(uniques):
 
@@ -252,4 +252,4 @@ if __name__ == "__main__":
             "all_smiles": all_smiles,
         }
     )
-    df.to_csv("../../data/literature_regio.csv", sep=",", encoding="utf-8", index=False)
+    df.to_csv(os.path.join(UTILS_PATH, "data/literature_regio.csv"), sep=",", encoding="utf-8", index=False)

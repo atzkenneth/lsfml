@@ -15,14 +15,14 @@ import torch
 import torch.nn as nn
 from torch_geometric.loader import DataLoader
 
-from lsfqml.lsfqml.publication.literature.regioselectivity.net import (
+from lsfml.literature.regioselectivity.net import (
     Atomistic_EGNN,
 )
-from lsfqml.lsfqml.publication.literature.regioselectivity.net_utils import (
+from lsfml.literature.regioselectivity.net_utils import (
     DataLSF,
     get_rxn_ids,
 )
-from lsfqml.lsfqml.publication.utils import mae_loss
+from lsfml.utils import mae_loss, UTILS_PATH
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -124,10 +124,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Define Configuration form Model and Dataset
-    CONFIG_PATH = "config/"
     config = configparser.ConfigParser()
-    CONFIG_NAME = "config_" + str(args.config) + ".ini"
-    config.read(CONFIG_PATH + CONFIG_NAME)
+    CONFIG_PATH = os.path.join(UTILS_PATH, f"config/config_{str(args.config)}.ini")
+    config.read(CONFIG_PATH)
     print({section: dict(config[section]) for section in config.sections()})
     early_stop = True if args.early_stop >= 1 else False
 

@@ -6,8 +6,8 @@
 import torch
 import torch.nn as nn
 
-from lsfqml.lsfqml.publication.modules.gmt import GraphMultisetTransformer
-from lsfqml.lsfqml.publication.modules.gnn_blocks import (
+from lsfml.modules.gmt import GraphMultisetTransformer
+from lsfml.modules.gnn_blocks import (
     EGNN_sparse,
     EGNN_sparse3D,
     weights_init,

@@ -8,6 +8,7 @@ import random
 import h5py
 import numpy as np
 import torch
+from torch_geometric.data import Data
 from lsfml.modules.pygdataset import Dataset
 
 random.seed(2)

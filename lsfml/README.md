@@ -1,5 +1,7 @@
 # Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning
 
+![](img/NCHEM-22102062A_figure1.png.jpg)
+
 This repository contains the reference implementation of the graph machine learning platform introduced in "Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning", by David F. Nippa, Kenneth Atz, et al. Nat. Chem. X, XX (2023).
 
 
@@ -18,6 +20,15 @@ export PYTHONPATH="${PYTHONPATH}:<YOUR_PATH>lsfqml/"
 Source your `~/.bashrc`.
 source `~/.bashrc`
 conda activate lsfml
+```
+
+Test your installation by running `test_pyg.py`.
+
+```
+python test_pyg.py 
+>>> torch_geometric.__version__: 2.3.0
+>>> torch.__version__: 1.13.1
+>>> rdkit.__version__: 2022.09.5
 ```
 
 ## 2. Data
@@ -89,7 +100,6 @@ FINGERPRINT = ecfp4_2
 Further, arguments allow to set additional training parameters, such as `-config` (config file in `config/`), `-mode` (neural network type: a: GTNN, b: GNN, c: FNN), `-cv` (cross validation), `-testset` (test set, 1 - 4), and `-early_stop` (early stopping using a validation set: 1 = Yes, 0 = No; If set to 0, then the final model is stored at epoch=1000). Once the training and model parameters are chosen, the training script can be run. 
 
 ```
-cd experimental/
 python train.py -config 323 -mode a -cv 1 -testset 1 -early_stop 0
 ```
 The training script generates two directories where the models (`models/`) and results (`results/`) are stored. 

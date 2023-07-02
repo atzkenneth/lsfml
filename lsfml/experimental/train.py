@@ -117,7 +117,6 @@ if __name__ == "__main__":
     # Define Configuration form Model and Dataset
     config = configparser.ConfigParser()
     CONFIG_PATH = os.path.join(UTILS_PATH, f"config/config_{str(args.config)}.ini")
-    print(CONFIG_PATH)
     config.read(CONFIG_PATH)
     print({section: dict(config[section]) for section in config.sections()})
     early_stop = True if args.early_stop >= 1 else False

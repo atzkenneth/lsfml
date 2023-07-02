@@ -3,7 +3,7 @@
 #
 # Copyright (©) 2023 Kenneth Atz (ETH Zurich)
 
-import h5py
+import h5py, os
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -15,8 +15,8 @@ from torch_geometric.utils import add_self_loops
 from torch_geometric.utils.undirected import to_undirected
 from tqdm import tqdm
 
-from lsfqml.lsfqml.publication.qml.prod import get_model
-from lsfqml.lsfqml.publication.utils import get_dict_for_embedding, HYBRIDISATIONS, AROMATOCITY, IS_RING, ATOMTYPES, QML_ATOMTYPES
+from lsfml.qml.prod import get_model
+from lsfml.utils import get_dict_for_embedding, HYBRIDISATIONS, AROMATOCITY, IS_RING, ATOMTYPES, QML_ATOMTYPES, UTILS_PATH
 
 QMLMODEL = get_model(gpu=False)
 
@@ -167,7 +167,7 @@ def get_info_from_smi(smi):
 
 if __name__ == "__main__":
 
-    df = pd.read_csv("../../data/literature_rxndata.csv", encoding="unicode_escape")
+    df = pd.read_csv(os.path.join(UTILS_PATH, "data/literature_rxndata.csv"), encoding="unicode_escape")
 
     # Rxn id
     rxn_id = list(df["rxn_id"])
@@ -196,7 +196,9 @@ if __name__ == "__main__":
 
     print(f"Transforming {len(rxn_id)} reactions into h5 format")
 
-    with h5py.File("../../data/literature_rxndata.h5", "w") as lsf_container:
+    h5_path = os.path.join(UTILS_PATH, "data/literature_rxndata.h5")
+
+    with h5py.File(h5_path, "w") as lsf_container:
 
         for idx, rxn_key in enumerate(tqdm(rxn_id)):
 

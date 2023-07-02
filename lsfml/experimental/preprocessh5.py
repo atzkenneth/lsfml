@@ -3,7 +3,7 @@
 #
 # Copyright (©) 2023 Kenneth Atz (ETH Zurich)
 
-import h5py
+import h5py, os
 import networkx as nx
 import numpy as np
 import pandas as pd
@@ -184,7 +184,9 @@ if __name__ == "__main__":
 
     print(f"Calculating properties for {len(unique_substraes)} unique substartes")
 
-    with h5py.File("../data/experimental_substrates.h5", "w") as lsf_container1:
+    h5_path = os.path.join(UTILS_PATH, "data/experimental_substrates.h5")
+
+    with h5py.File(h5_path, "w") as lsf_container1:
 
         for rxn_key in tqdm(unique_substraes):
 
