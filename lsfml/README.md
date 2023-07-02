@@ -1,8 +1,8 @@
 # Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning
 
-![](img/NCHEM-22102062A_figure1.png.jpg)
+![](img/NCHEM-22102062A_figure1.png)
 
-This repository contains the reference implementation of the graph machine learning platform introduced in "Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning", by David F. Nippa, Kenneth Atz, et al. Nat. Chem. X, XX (2023).
+This repository contains the reference implementation of the graph machine learning platform introduced in David F. Nippa, Kenneth Atz, et al. Nat. Chem. X, XX (2023).
 
 
 ## 1. Environment
