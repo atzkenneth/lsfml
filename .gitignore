@@ -20,10 +20,10 @@ lsf.*
 *.txtx
 *.png
 *.jpg
+*.csv
 *.ini
 *.xyz
 *.pdf
 .nfs*
-*__pycache__
 __pycache__*
 __pycache__/*
