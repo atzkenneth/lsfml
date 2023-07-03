@@ -51,7 +51,6 @@ def train(
     training_loss = []
 
     for g in train_loader:
-
         g = g.to(DEVICE)
         optimizer.zero_grad()
 
@@ -72,13 +71,13 @@ def eval(
     model,
     eval_loader,
 ):
-    """Validation & test loop. 
+    """Validation & test loop.
 
     :param model: Model
     :type model: class
     :param eval_loader: Data loader
     :type eval_loader: torch_geometric.loader.dataloader.DataLoader
-    :return: tuple including essential information to quantify network perfromance such as MAE, predirctions, labels etc. 
+    :return: tuple including essential information to quantify network perfromance such as MAE, predirctions, labels etc.
     :rtype: tuple
     """
     model.eval()
@@ -92,9 +91,7 @@ def eval(
     pt_trgs = []
 
     with torch.no_grad():
-
         for g in eval_loader:
-
             g = g.to(DEVICE)
             pred = model(g)
             mae = mae_loss(pred, g.rxn_trg)
@@ -109,7 +106,6 @@ def eval(
 
 
 if __name__ == "__main__":
-
     # python train.py -config 141 -mode a -cv 1 -early_stop 0
 
     # Make Folders for Results and Models
@@ -145,23 +141,38 @@ if __name__ == "__main__":
     GRAPH_DIM = "edge_3d" if GEOMETRY >= 1 else "edge_2d"
 
     # Initialize Model
-    model = Atomistic_EGNN(n_kernels=N_KERNELS, mlp_dim=D_MLP, kernel_dim=D_KERNEL, embeddings_dim=D_EMBEDDING, qml=QML, geometry=GEOMETRY)
+    model = Atomistic_EGNN(
+        n_kernels=N_KERNELS,
+        mlp_dim=D_MLP,
+        kernel_dim=D_KERNEL,
+        embeddings_dim=D_EMBEDDING,
+        qml=QML,
+        geometry=GEOMETRY,
+    )
     model = model.to(DEVICE)
 
     model_parameters = filter(lambda p: p.requires_grad, model.parameters())
     model_parameters = sum([np.prod(e.size()) for e in model_parameters])
     print("\nmodel_parameters", model_parameters)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=LR_FACTOR, weight_decay=1e-10)
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=LR_FACTOR,
+        weight_decay=1e-10,
+    )
     criterion = nn.MSELoss()
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=LR_STEP_SIZE, gamma=0.5, verbose=False)
+    scheduler = torch.optim.lr_scheduler.StepLR(
+        optimizer,
+        step_size=LR_STEP_SIZE,
+        gamma=0.5,
+        verbose=False,
+    )
 
     # Neural Netowork Training
     tr_losses = []
     ev_losses = []
 
     if early_stop:
-
         # Get Datasets
         tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA)
         train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, graph_dim=GRAPH_DIM)
@@ -175,7 +186,6 @@ if __name__ == "__main__":
         min_mae = 100
 
         for epoch in range(1000):
-
             tr_l = train(model, optimizer, criterion, train_loader)
             ev_l, ev_ys, ev_pred, ev_rxns, ev_pt_trgs = eval(model, eval_loader)
             tr_losses.append(tr_l)
@@ -185,7 +195,6 @@ if __name__ == "__main__":
             print(epoch, tr_l, ev_l)
 
             if ev_l <= min_mae:
-
                 # Define new min-loss
                 min_mae = ev_l
 
@@ -206,7 +215,6 @@ if __name__ == "__main__":
                     f"results/config_{args.config}_{args.cv}.pt",
                 )
     else:
-
         # Get Datasets
         tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA)
         tran_ids += eval_ids
@@ -217,13 +225,11 @@ if __name__ == "__main__":
 
         # Training without Early Stopping
         for epoch in range(1000):
-
             tr_l = train(model, optimizer, criterion, train_loader)
             tr_losses.append(tr_l)
             scheduler.step()
 
             if epoch >= 999:
-
                 # Test model
                 te_l, te_ys, te_pred, te_rxns, te_pt_trgs = eval(model, test_loader)
 

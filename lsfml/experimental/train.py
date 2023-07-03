@@ -161,7 +161,12 @@ if __name__ == "__main__":
             geometry=GEOMETRY,
         )
     elif args.mode == "c":
-        model = FNN(fp_dim=FP_DIM, mlp_dim=D_MLP, kernel_dim=D_KERNEL, embeddings_dim=D_EMBEDDING)
+        model = FNN(
+            fp_dim=FP_DIM,
+            mlp_dim=D_MLP,
+            kernel_dim=D_KERNEL,
+            embeddings_dim=D_EMBEDDING,
+        )
 
     model = model.to(DEVICE)
 
@@ -169,9 +174,18 @@ if __name__ == "__main__":
     model_parameters = sum([np.prod(e.size()) for e in model_parameters])
     print("\nmodel_parameters", model_parameters)
 
-    optimizer = torch.optim.Adam(model.parameters(), lr=LR_FACTOR, weight_decay=1e-10)
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=LR_FACTOR,
+        weight_decay=1e-10,
+    )
     criterion = nn.MSELoss()
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=LR_STEP_SIZE, gamma=0.5, verbose=False)
+    scheduler = torch.optim.lr_scheduler.StepLR(
+        optimizer,
+        step_size=LR_STEP_SIZE,
+        gamma=0.5,
+        verbose=False,
+    )
 
     # Neural Netowork Training
     tr_losses = []

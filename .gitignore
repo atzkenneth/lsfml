@@ -18,11 +18,12 @@ lsf.*
 *.xlsx
 *.out
 *.txtx
+*.png
+*.jpg
 *.csv
+*.ini
 *.xyz
 *.pdf
-*.jpg
 .nfs*
-*__pycache__
 __pycache__*
 __pycache__/*
