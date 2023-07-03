@@ -21,6 +21,8 @@ from lsfml.experimental.net_utils import DataLSF, get_rxn_ids
 from lsfml.utils import mae_loss, UTILS_PATH
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+SUB_DATA = os.path.join(UTILS_PATH, "data/experimental_substrates.h5")
+RXN_DATA = os.path.join(UTILS_PATH, "data/experimental_rxndata.h5")
 
 
 def train(
@@ -136,6 +138,7 @@ if __name__ == "__main__":
     GRAPH_DIM = "edge_3d" if GEOMETRY >= 1 else "edge_2d"
     FINGERPRINT = FINGERPRINT if args.mode == "c" else None
     FP_DIM = 1024 if FINGERPRINT == "ecfp6_1" else 256
+    CONFORMER_LIST = ["a", "b", "c", "d", "e"]
 
     # Initialize Model
     if args.mode == "a":
@@ -176,12 +179,12 @@ if __name__ == "__main__":
 
     if early_stop:
         # Get Datasets
-        tran_ids, eval_ids, test_ids = get_rxn_ids(split=SPLIT, eln=ELN, testset=args.testset)
-        train_data = DataLSF(rxn_ids=tran_ids, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT)
+        tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA, split=SPLIT, eln=ELN, testset=args.testset)
+        train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
         train_loader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        eval_data = DataLSF(rxn_ids=eval_ids, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT)
+        eval_data = DataLSF(rxn_ids=eval_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
         eval_loader = DataLoader(eval_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        test_data = DataLSF(rxn_ids=test_ids, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT)
+        test_data = DataLSF(rxn_ids=test_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
         test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
         # Training with Early Stopping
@@ -224,11 +227,11 @@ if __name__ == "__main__":
 
     else:
         # Get Datasets
-        tran_ids, eval_ids, test_ids = get_rxn_ids(split=SPLIT, eln=ELN, testset=args.testset)
+        tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA, split=SPLIT, eln=ELN, testset=args.testset)
         tran_ids += eval_ids
-        train_data = DataLSF(rxn_ids=tran_ids, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT)
+        train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
         train_loader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        test_data = DataLSF(rxn_ids=test_ids, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT)
+        test_data = DataLSF(rxn_ids=test_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
         test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
 
         # Training without Early Stopping

@@ -15,7 +15,7 @@ random.seed(2)
 
 
 def get_rxn_ids(
-    data="../../data/literature_rxndata.h5",
+    data,
 ):
     """Generates the data set split into training, validation and test sets. 
 
@@ -43,9 +43,9 @@ class DataLSF(Dataset):
     def __init__(
         self,
         rxn_ids,
-        data="../../data/literature_rxndata.h5",
-        graph_dim="edge_2d",  # edge_2d of edge_3d
-        fingerprint="ecfp4_2",
+        data,
+        graph_dim,
+        fingerprint,
     ):
         """Initialization. 
 

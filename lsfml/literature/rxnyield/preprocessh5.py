@@ -220,10 +220,7 @@ if __name__ == "__main__":
                 trg_rxn = trg[idx]
 
                 if np.isnan(trg_rxn):
-                    print(rxn_key, trg_rxn)
-                    print(float(trg_rxn))
                     trg_rxn = 0.0
-                    print(float(trg_rxn))
 
                 # Create group in h5 for this id
                 lsf_container.create_group(str(rxn_key))
