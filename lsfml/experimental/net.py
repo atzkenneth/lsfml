@@ -345,7 +345,7 @@ class EGNN(nn.Module):
         :return: Prediction.
         :rtype: Tensor
         """
-        if self.qm:
+        if self.qml:
             features = self.pre_egnn_mlp(
                 torch.cat(
                     [

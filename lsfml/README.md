@@ -2,7 +2,7 @@
 
 ![](img/NCHEM-22102062A_figure1.png)
 
-This repository contains a reference implementation to preprocess the data, as well as to train and apply the graph machine learning models introduced in David F. Nippa, Kenneth Atz, et al. Nat. Chem. X, XX (2023).
+This repository contains a reference implementation to preprocess the data, as well as to train and apply the graph machine learning models introduced in David F. Nippa, Kenneth Atz, et al. Journal, X, XX (2023).
 
 
 ## 1. Environment
@@ -164,13 +164,14 @@ The software was developed at ETH Zurich and is licensed by the user-friendy MIT
 Copyright (©) 2023 Kenneth Atz (ETH Zurich)
 ```
 
-## 11. Citation (To be updated with DOI)
+## 11. Citation
 ```
 @article{nippa_atz2022enabling,
   title={Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning},
   author={Nippa, David F. and Atz, Kenneth and Hohler, Remo and M{\"u}ller, Alex T. and Marx, Andreas and Bartelmus, Christian and Wuitschik, Georg and Marzuoli, Irene and Jost, Vera and Wolfard, Jens and Binder, Martin and Stepan, Antonia F. and Konrad, David B. and Grether, Uwe and Martin, Rainer E. and Schneider, Gisbert},
-  journal={Nat. Chem.},
-  year={2023}
+  journal={},
+  year={}
 }
+To Do: To be updated with DOI and journal.
 ```
 

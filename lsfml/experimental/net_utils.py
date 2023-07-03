@@ -16,10 +16,10 @@ random.seed(2)
 
 
 def get_rxn_ids(
-    data="../data/experimental_rxndata.h5",
-    split="random",
-    eln="ELN036496-147",
-    testset="1",
+    data,
+    split,
+    eln,
+    testset,
 ):
     """Generates the data set split into training, validation and test sets.
 
@@ -75,12 +75,12 @@ class DataLSF(Dataset):
     def __init__(
         self,
         rxn_ids,
-        data="../data/experimental_rxndata.h5",
-        data_substrates="../data/experimental_substrates.h5",
-        target="binary",
-        graph_dim="edge_2d",
-        fingerprint="ecfp4_2",
-        conformers=["a", "b", "c", "d", "e"],
+        data,
+        data_substrates,
+        target,
+        graph_dim,
+        fingerprint,
+        conformers,
     ):
         """Initialization.
 
