@@ -18,7 +18,9 @@ lsf.*
 *.xlsx
 *.out
 *.txtx
-*.csv
+*.png
+*.jpg
+*.ini
 *.xyz
 *.pdf
 .nfs*
