@@ -17,10 +17,24 @@ from matplotlib.gridspec import GridSpec
 
 from lsfml.utils import UTILS_PATH
 
-fontsize = 22 
+fontsize = 22
+
 
 def get_hist_property(wgt, rot, hba, hbd, psa, rng, sp3, ste, name, bins):
+    """Get histogram of molecular properties.
 
+    Args:
+        wgt (list): Molecular weight.
+        rot (list): Rotatable bonds.
+        hba (list): Hydrogen bond acceptors.
+        hbd (list): Hydrogen bond acceptors.
+        psa (list): Polar surface area.
+        rng (list): Rings.
+        sp3 (list): Fraction sp3.
+        ste (list): Stereogenic centers.
+        name (str): File name.
+        bins (int): Number of bins.
+    """
     fig = plt.figure(figsize=(40, 16))
     gs = GridSpec(nrows=2, ncols=4)
     gs.update(wspace=0.4, hspace=0.2)
@@ -31,13 +45,7 @@ def get_hist_property(wgt, rot, hba, hbd, psa, rng, sp3, ste, name, bins):
     ax.spines["left"].set_color("none")
     ax.spines["right"].set_color("none")
     ax.tick_params(labelcolor="w", top=False, bottom=False, left=False, right=False)
-    # ax.set_ylabel("Number of molecules", fontsize=fontsize + 6, labelpad=80)
-    # ax.legend(labelcolor=colors, labels=labels)
-    # handles, labels1 = ax.get_legend_handles_labels()
-    # fig.legend(handles, labels1, loc="upper center")
     ax.set_ylabel("Number of molecules", fontsize=fontsize + 8, labelpad=60)
-    # ax.set_title("Biologic affinity", fontsize=fontsize + 4)
-
 
     ax1 = fig.add_subplot(gs[0, 0])
     ax1.hist(wgt, density=False, facecolor="royalblue", bins=bins)
@@ -94,8 +102,16 @@ def get_hist_property(wgt, rot, hba, hbd, psa, rng, sp3, ste, name, bins):
 
     return
 
+
 def get_hist_temp_time(temps, times, scale, concs):
-    
+    """Get historgram of reaction conditions.
+
+    Args:
+        temps (list): Reaction temperature.
+        times (list): Reaction time.
+        scale (list): Reaction scale.
+        concs (list): Reaction concentration.
+    """
     fig = plt.figure(figsize=(40, 10))
     gs = GridSpec(nrows=1, ncols=4)
     gs.update(wspace=0.4, hspace=0.2)
@@ -106,13 +122,7 @@ def get_hist_temp_time(temps, times, scale, concs):
     ax.spines["left"].set_color("none")
     ax.spines["right"].set_color("none")
     ax.tick_params(labelcolor="w", top=False, bottom=False, left=False, right=False)
-    # ax.set_ylabel("Number of molecules", fontsize=fontsize + 6, labelpad=80)
-    # ax.legend(labelcolor=colors, labels=labels)
-    # handles, labels1 = ax.get_legend_handles_labels()
-    # fig.legend(handles, labels1, loc="upper center")
     ax.set_ylabel("Number of reactions", fontsize=fontsize + 8, labelpad=60)
-    # ax.set_title("Biologic affinity", fontsize=fontsize + 4)
-
 
     ax1 = fig.add_subplot(gs[0, 0])
     ax1.hist(temps, density=False, facecolor="royalblue", bins=30)
@@ -146,8 +156,16 @@ def get_hist_temp_time(temps, times, scale, concs):
 
     return
 
-def get_propertiest(smiles):
 
+def get_propertiest(smiles):
+    """Calculating molecular properties from a list of SMILES.
+
+    Args:
+        smiles (list): SMILES strings
+
+    Returns:
+        lists: Molecular properties.
+    """
     wgt = []
     rot = []
     hba = []
@@ -158,7 +176,7 @@ def get_propertiest(smiles):
     ste = []
 
     for i, smi in enumerate(tqdm(smiles)):
-        try: 
+        try:
             mol = Chem.MolFromSmiles(smi)
             wgt.append(rdMolDescriptors.CalcExactMolWt(mol))
             rot.append(rdMolDescriptors.CalcNumRotatableBonds(mol))
@@ -170,11 +188,18 @@ def get_propertiest(smiles):
             ste.append(rdMolDescriptors.CalcNumAtomStereoCenters(mol))
         except:
             pass
-    
+
     return wgt, rot, hba, hbd, psa, rng, sp3, ste
 
-def get_csv_summary(df, key, with_mol_img=False):
 
+def get_csv_summary(df, key, with_mol_img=False):
+    """Save csv from data frame.
+
+    Args:
+        df (pandas data frame): Data frame consisting of SMILES strings and their IDs.
+        key (str): key to access SMILES strings.
+        with_mol_img (bool, optional): Save mol img to xlsx file. Defaults to False.
+    """
     smiles_set = list(set(df[key]))
     smiles_list = list(df[key])
 
@@ -182,21 +207,18 @@ def get_csv_summary(df, key, with_mol_img=False):
 
     for smi in smiles_set:
         summary_dict[smi] = []
-    
-    yes_no  = list(df["yes_no"]) 
+
+    yes_no = list(df["yes_no"])
 
     for idx, x in enumerate(smiles_list):
         summary_dict[x].append(yes_no[idx])
-    
+
     smls = []
     wins = []
     loss = []
     totl = []
 
     for x in summary_dict:
-        # if x == "none":
-        # smls.append("NO[Ne]")
-        # else:
         smls.append(x)
         wins.append(summary_dict[x].count(1))
         loss.append(summary_dict[x].count(0))
@@ -213,22 +235,35 @@ def get_csv_summary(df, key, with_mol_img=False):
 
     df_tmp.sort_values(by="num_reactions_worked", ascending=False, inplace=True, ignore_index=True)
 
-    out_name = "analysis/summary/summary_"+str(key)+".xlsx"
+    out_name = "analysis/summary/summary_" + str(key) + ".xlsx"
     os.makedirs(os.path.dirname(out_name), exist_ok=True)
-    df_tmp.to_csv("analysis/summary/summary_"+str(key)+".csv", index=False,)
+    df_tmp.to_csv(
+        "analysis/summary/summary_" + str(key) + ".csv",
+        index=False,
+    )
 
     if with_mol_img:
         SaveXlsxFromFrame(
             df_tmp,
             out_name,
-            molCols=["smiles",],
+            molCols=[
+                "smiles",
+            ],
             size=(300, 300),
         )
 
     return
 
+
 def SaveXlsxFromFrame(frame, outFile, molCols=["ROMol"], size=(300, 300)):
-    
+    """Generating xlsx file with drawings.
+
+    Args:
+        frame (pandas data frame): Data frame consisting of SMILES strings and their IDs and other properties.
+        outFile (str): Name of the files saved.
+        molCols (list, optional): Columns from which SMILES are saved as drwings. Defaults to ["ROMol"].
+        size (tuple, optional): Size of the drawings. Defaults to (300, 300).
+    """
     cols = list(frame.columns)
 
     dataTypes = dict(frame.dtypes)
@@ -252,7 +287,6 @@ def SaveXlsxFromFrame(frame, outFile, molCols=["ROMol"], size=(300, 300)):
             # none can not be visualized as molecule
             if row[molCol] == "none":
                 pass
-                # img = Draw.MolToImage(Chem.MolFromSmiles("[Ar]"), size=size)
             else:
                 img = Draw.MolToImage(Chem.MolFromSmiles(row[molCol]), size=size)
                 img.save(image_data, format="PNG")
@@ -275,8 +309,15 @@ def SaveXlsxFromFrame(frame, outFile, molCols=["ROMol"], size=(300, 300)):
     workbook.close()
     image_data.close()
 
-def get_hist_equiv(ctls_eq, lgnd_eq, rgnt_eq):
 
+def get_hist_equiv(ctls_eq, lgnd_eq, rgnt_eq):
+    """Plot hoistogram.
+
+    Args:
+        ctls_eq (str): Equivalents of Catalyst.
+        lgnd_eq (str): Equivalents of Ligand.
+        rgnt_eq (str): Equivalents of Reagent.
+    """
     fig = plt.figure(figsize=(30, 14))
     gs = GridSpec(nrows=1, ncols=3)
     gs.update(wspace=0.4, hspace=0.2)
@@ -287,12 +328,8 @@ def get_hist_equiv(ctls_eq, lgnd_eq, rgnt_eq):
     ax.spines["left"].set_color("none")
     ax.spines["right"].set_color("none")
     ax.tick_params(labelcolor="w", top=False, bottom=False, left=False, right=False)
-    # ax.legend(labelcolor=colors, labels=labels)
-    # handles, labels1 = ax.get_legend_handles_labels()
-    # fig.legend(handles, labels1, loc="upper center")
     ax.set_xlabel("Equivalents / %", fontsize=fontsize + 8, labelpad=60)
     ax.set_ylabel("Number of reactions", fontsize=fontsize + 8, labelpad=60)
-    # ax.set_title("Biologic affinity", fontsize=fontsize + 4)
 
     ctls_eq = [x * 100 for x in ctls_eq]
     ax1 = fig.add_subplot(gs[0, 0])
@@ -315,7 +352,6 @@ def get_hist_equiv(ctls_eq, lgnd_eq, rgnt_eq):
     ax3.tick_params(axis="y", labelsize=fontsize)
     ax3.set_xlabel(str("Reagent"), fontsize=fontsize + 4)
 
-
     out_name = os.path.join("analysis/figures/histogram_equivalents.png")
     os.makedirs(os.path.dirname(out_name), exist_ok=True)
     plt.savefig(out_name, dpi=300)
@@ -323,7 +359,17 @@ def get_hist_equiv(ctls_eq, lgnd_eq, rgnt_eq):
 
     return
 
+
 def yield_hist(yields, name):
+    """Plot histrogram of reaction yields.
+
+    Args:
+        yields (list): List of reaction yields.
+        name (str): Name of output file.
+
+    Yields:
+        _type_: _description_
+    """
     plt.figure(figsize=(8, 8))
     yields = [float(x) * 100 for x in yields]
     plt.hist(yields, density=False, color="royalblue", bins=20)
@@ -337,8 +383,8 @@ def yield_hist(yields, name):
 
     return
 
-if __name__ == '__main__':
 
+if __name__ == "__main__":
     # read csv
     df = pd.read_csv(os.path.join(UTILS_PATH, "data/experimental_rxndata.csv"))
     smiles = list(set(df["educt"]))
@@ -367,21 +413,18 @@ if __name__ == '__main__':
     scale = list(df["rxn_scale_mol"])
     concs = list(df["rxn_c_moll"])
     get_hist_temp_time(temps, times, scale, concs)
-    
+
     # get histogram of equivalents
-    ctls_eq = list(df["catalyst_eq"]) 
-    lgnd_eq = list(df["ligand_eq"]) 
-    rgnt_eq = list(df["reagent_eq"]) 
+    ctls_eq = list(df["catalyst_eq"])
+    lgnd_eq = list(df["ligand_eq"])
+    rgnt_eq = list(df["reagent_eq"])
     get_hist_equiv(ctls_eq, lgnd_eq, rgnt_eq)
 
     # yield hist
     yields = [1 - x for x in list(df["non_bo"])]
     yield_hist(yields, "analysis/figures/hist_rxn_yield.png")
 
-    yields = [x for x in yields if x > 0 ]
+    yields = [x for x in yields if x > 0]
     yield_hist(yields, "analysis/figures/hist_rxn_yield_pos.png")
-    
+
     print("All Done!")
-
-
-    

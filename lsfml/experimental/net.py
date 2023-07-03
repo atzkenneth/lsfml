@@ -16,8 +16,8 @@ from lsfml.modules.gnn_blocks import (
 
 
 class GraphTransformer(nn.Module):
-    """Graph Transformer neural network (GTNN) for yield and binary predictions. 
-    """
+    """Graph Transformer neural network (GTNN) for yield and binary predictions."""
+
     def __init__(
         self,
         n_kernels=3,
@@ -156,9 +156,9 @@ class GraphTransformer(nn.Module):
     def forward(self, g_batch):
         """Forward pass of the GTNN.
 
-        :param g_batch: Input graph. 
+        :param g_batch: Input graph.
         :type g_batch: class
-        :return: Prediction. 
+        :return: Prediction.
         :rtype: Tensor
         """
         if self.qml:
@@ -226,8 +226,7 @@ class GraphTransformer(nn.Module):
 
 
 class EGNN(nn.Module):
-    """Graph neural network (GNN) using sum pooling for yield and binary predictions. 
-    """
+    """Graph neural network (GNN) using sum pooling for yield and binary predictions."""
 
     def __init__(self, n_kernels=3, mlp_dim=512, kernel_dim=64, embeddings_dim=64, qml=True, geometry=True):
         """Initialization of GNN
@@ -341,9 +340,9 @@ class EGNN(nn.Module):
     def forward(self, g_batch):
         """Forward pass of the GNN.
 
-        :param g_batch: Input graph. 
+        :param g_batch: Input graph.
         :type g_batch: class
-        :return: Prediction. 
+        :return: Prediction.
         :rtype: Tensor
         """
         if self.qm:
@@ -408,8 +407,7 @@ class EGNN(nn.Module):
 
 
 class FNN(nn.Module):
-    """Feed forward neural network (FNN) for yield and binary predictions. 
-    """
+    """Feed forward neural network (FNN) for yield and binary predictions."""
 
     def __init__(self, fp_dim=256, mlp_dim=512, kernel_dim=64, embeddings_dim=64):
         """Initialization of FNN
@@ -465,9 +463,9 @@ class FNN(nn.Module):
     def forward(self, g_batch):
         """Forward pass of the FNN.
 
-        :param g_batch: Input graph. 
+        :param g_batch: Input graph.
         :type g_batch: class
-        :return: Prediction. 
+        :return: Prediction.
         :rtype: Tensor
         """
         features = self.pre_egnn_mlp(g_batch.ecfp_fp)

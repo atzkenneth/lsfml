@@ -16,7 +16,16 @@ from torch_geometric.utils.undirected import to_undirected
 from tqdm import tqdm
 
 from lsfml.qml.prod import get_model
-from lsfml.utils import get_dict_for_embedding, get_fp_from_smi, HYBRIDISATIONS, AROMATOCITY, IS_RING, ATOMTYPES, QML_ATOMTYPES, UTILS_PATH
+from lsfml.utils import (
+    get_dict_for_embedding,
+    get_fp_from_smi,
+    HYBRIDISATIONS,
+    AROMATOCITY,
+    IS_RING,
+    ATOMTYPES,
+    QML_ATOMTYPES,
+    UTILS_PATH,
+)
 
 QMLMODEL = get_model(gpu=False)
 
@@ -122,7 +131,6 @@ def get_info_from_smi(smi, randomseed, radius):
 
 
 if __name__ == "__main__":
-
     df = pd.read_csv(os.path.join(UTILS_PATH, "data/experimental_rxndata.csv"))
 
     # Rxn id
@@ -168,12 +176,10 @@ if __name__ == "__main__":
     unique_substraes = {}
 
     for idx, rxn_key in enumerate(rxn_id):
-
         short_rxn_key = rxn_key.split("_")[0]
         short_rxn_key = short_rxn_key.split("-")[-1]
 
         if short_rxn_key not in unique_substraes:
-
             unique_substraes[short_rxn_key] = educt[idx]
 
         else:
@@ -184,9 +190,7 @@ if __name__ == "__main__":
     h5_path = os.path.join(UTILS_PATH, "data/experimental_substrates.h5")
 
     with h5py.File(h5_path, "w") as lsf_container1:
-
         for rxn_key in tqdm(unique_substraes):
-
             (
                 atom_id_a,
                 ring_id_a,
@@ -293,11 +297,8 @@ if __name__ == "__main__":
     print(f"Transforming {len(rxn_id)} reactions into h5 format")
 
     with h5py.File("../data/experimental_rxndata.h5", "w") as lsf_container:
-
         for idx, rxn_key in enumerate(tqdm(rxn_id)):
-
             try:
-
                 rgnt_id = rea_dict[reagent[idx]]
                 lgnd_id = lig_dict[ligand[idx]]
                 clst_id = cat_dict[catalyst[idx]]

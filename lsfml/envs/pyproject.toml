@@ -2,7 +2,7 @@
 name = "lsfml"
 version = "0.0.1"
 description = "Reaction predcition with PyTorch Geometric"
-authors = ["Kenneth Atz <kenatz@ethz.ch>"]
+authors = ["Kenneth Atz <kenatz@ethz.ch>",]
 license = "See License file"
 
 [tool.poetry.dependencies]
@@ -17,10 +17,10 @@ lightgbm = "~3.1"
 pyopenssl = "20.0.0" 
 pandas = "^1.3"
 rdkit = "^2022.9"
-XlsxWriter = "3.1.2"
-openpyxl = "3.1.2
-networkx = "3.1"
-einops = "0.6.1"
+XlsxWriter = "^3.1.2"
+openpyxl = "^3.1.2"
+networkx = "^3.1"
+einops = "^0.6.1"
 
 [tool.poetry.dev-dependencies]
 # notebooks

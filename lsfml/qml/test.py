@@ -22,7 +22,7 @@ QML_ATOMTYPE_DICT = get_dict_for_embedding(QML_ATOMTYPES)
 
 
 def compare_charges(sdf):
-    """Main function to compare predicted with calculated partial charges using DFT using reference structures in test_mols/. 
+    """Main function to compare predicted with calculated partial charges using DFT using reference structures in test_mols/.
 
     :param sdf: Path to SDF of a molecule.
     :type sdf: str
@@ -72,12 +72,11 @@ def compare_charges(sdf):
 
 
 if __name__ == "__main__":
-
     mol_files = sorted(glob.glob("test_mols/*sdf"))
 
     maes = []
 
-    print("Partal charge prediction is conducted with the following errors:")
+    print("Partail charge prediction is conducted with the following mean absolute errors:")
 
     for sdf in mol_files:
         mae = compare_charges(sdf)

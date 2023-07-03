@@ -2,22 +2,27 @@
 
 ![](img/NCHEM-22102062A_figure1.png)
 
-This repository contains the reference implementation of the graph machine learning platform introduced in David F. Nippa, Kenneth Atz, et al. Nat. Chem. X, XX (2023).
+This repository contains a reference implementation to preprocess the data, as well as to train and apply the graph machine learning models introduced in David F. Nippa, Kenneth Atz, et al. Nat. Chem. X, XX (2023).
 
 
 ## 1. Environment
 Create and activate the lsfml environment. 
+
 ```
 conda env create -f environment.yml
 conda activate lsfml
 poetry install
 ```
-```
+
 Add the "lsfml path" as PYTHONPATH to your `~/.bashrc` file. 
+
 ```
 export PYTHONPATH="${PYTHONPATH}:<YOUR_PATH>lsfqml/"
 ```
+
 Source your `~/.bashrc`.
+
+```
 source `~/.bashrc`
 conda activate lsfml
 ```
@@ -59,7 +64,7 @@ ls qml/
 config_14000.ini  model1.pkl  prod.py qml_net.py  test_mols  test.py
 python test.py 
 >>> QML model has been sent to cpu
->>> Partal charge prediction is conducted with the following errors:
+>>> Partail charge prediction is conducted with the following mean absolute errors:
 >>> CHEMBL1 0.0039913069590710925
 >>> CHEMBL2 0.002572119902126642
 >>> CHEMBL3 0.0026494266223815776

@@ -6,7 +6,6 @@ lsf.*
 .vscode/*
 .vscode*
 .vscode
-*.png
 *.h5
 *.txt
 *.pt
@@ -18,8 +17,8 @@ lsf.*
 *.cdxml
 *.xlsx
 *.out
-*.ini
 *.txtx
+*.csv
 *.xyz
 *.pdf
 *.jpg
