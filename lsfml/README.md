@@ -81,7 +81,7 @@ cd experimental/
 python preprocessh5.py 
 ```
 
-Once `data/experimental_rxndata.h5` is generated, the models can be trained via `train.py`. `train.py` imports the data loader from `net_utils.py`, the network architectures  from `net.py` and the hyperparameters from one of the config files in `config/`. The config files contain the model and training hyperparameters, as well as information about data set split (SPLIT, random or eln (i.e. substrate type)), target (TARGET, mono (i.e. yield) of binary), graph dimension (GEOMETRY, 1 (i.e. 3D) or 0 (i.e. 2D)) and electronic properties (QML, 1 (i.e. including partial charges) or 0 (i.e. no partial charges)). An exemplary config file (`config/config_323.ini`) using a random split, reaction yield as target, 3D graphs and quantum chemical information looks as following: 
+Once `data/experimental_rxndata.h5` is generated, the models can be trained via `train.py`. `train.py` imports the data loader from `net_utils.py`, the network architectures  from `net.py` and the hyperparameters from one of the config files in `config/`. The config files contain the model and training hyperparameters, as well as information about data set split (SPLIT, random or eln (i.e. substrate type)), target (TARGET, mono (i.e. yield) or binary), graph dimension (GEOMETRY, 1 (i.e. 3D) or 0 (i.e. 2D)) and electronic properties (QML, 1 (i.e. including partial charges) or 0 (i.e. no partial charges)). An exemplary config file (`config/config_323.ini`) using a random split, reaction yield as target, 3D graphs and quantum chemical information looks as following: 
 
 ```
 cat config/config_323.ini 

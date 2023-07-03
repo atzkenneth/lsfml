@@ -14,6 +14,7 @@ from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops
 from torch_geometric.utils.undirected import to_undirected
 from tqdm import tqdm
+from scipy.spatial.distance import pdist, squareform
 
 from lsfml.qml.prod import get_model
 from lsfml.utils import get_dict_for_embedding, AROMATOCITY, IS_RING, QML_ATOMTYPES, UTILS_PATH
@@ -28,13 +29,13 @@ ATOMTYPE_DICT = {"H": 0, "C": 1, "N": 2, "O": 3, "F": 4, "P": 5, "S": 6, "Cl": 7
 
 
 def get_rms(smi, patt, repl):
-    """Takes a SMILES-sting and replaces a substructure (patt) such as a functional group with another substructure (repl) 
+    """Takes a SMILES-sting and replaces a substructure (patt) such as a functional group with another substructure (repl)
 
     :param smi: SMILES-string.
     :type smi: str
     :param patt: Pattern to be replaced.
     :type patt: str
-    :param repl: Pattern to replace. 
+    :param repl: Pattern to replace.
     :type repl: str
     :return: SMILES-string.
     :rtype: str
@@ -141,17 +142,9 @@ def get_regioselectivity(rms, seed, radius):
     charges = QMLMODEL(qml_graph).unsqueeze(1).detach().numpy()
 
     # Get edges for 3d graph
-    edge1 = []
-    edge2 = []
-    for i in range(len(atomids)):
-        for j in range(len(atomids)):
-            if i != j:
-                dist = np.linalg.norm(crds_3d[j] - crds_3d[i])
-                if dist <= radius:
-                    edge1.append(i)
-                    edge2.append(j)
-
-    edge_3d = torch.from_numpy(np.array([edge1, edge2]))
+    distance_matrix = squareform(pdist(crds_3d))
+    np.fill_diagonal(distance_matrix, float("inf"))  # to remove self-loops
+    edge_3d = torch.from_numpy(np.vstack(np.where(distance_matrix <= radius)))
 
     return (
         atomids,
@@ -168,7 +161,6 @@ def get_regioselectivity(rms, seed, radius):
 
 
 if __name__ == "__main__":
-
     # Read csv
     df = pd.read_csv(os.path.join(UTILS_PATH, "data/literature_rxndata.csv"), encoding="unicode_escape")
     smiles = list(df["product_1_smiles"])
@@ -194,15 +186,11 @@ if __name__ == "__main__":
     h5_path = os.path.join(UTILS_PATH, "data/literature_regio.h5")
 
     with h5py.File(h5_path, "w") as lsf_container:
-
         for smi in tqdm(uniques):
-
             try:
-
                 rms = get_rms(smi, patt, repl)
 
                 if "[2H]" in rms:
-
                     (
                         atom_id,
                         ring_id,

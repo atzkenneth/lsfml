@@ -14,6 +14,7 @@ from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops
 from torch_geometric.utils.undirected import to_undirected
 from tqdm import tqdm
+from scipy.spatial.distance import pdist, squareform
 
 from lsfml.qml.prod import get_model
 from lsfml.utils import (
@@ -106,17 +107,9 @@ def get_info_from_smi(smi, randomseed, radius):
     charges = QMLMODEL(qml_graph).unsqueeze(1).detach().numpy()
 
     # Get edges for 3d graph
-    edge1 = []
-    edge2 = []
-    for i in range(len(atomids)):
-        for j in range(len(atomids)):
-            if i != j:
-                dist = np.linalg.norm(crds_3d[j] - crds_3d[i])
-                if dist <= radius:
-                    edge1.append(i)
-                    edge2.append(j)
-
-    edge_3d = torch.from_numpy(np.array([edge1, edge2]))
+    distance_matrix = squareform(pdist(crds_3d))
+    np.fill_diagonal(distance_matrix, float("inf"))  # to remove self-loops
+    edge_3d = torch.from_numpy(np.vstack(np.where(distance_matrix <= radius)))
 
     return (
         atomids,

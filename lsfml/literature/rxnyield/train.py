@@ -55,7 +55,6 @@ def train(
     training_loss = []
 
     for g in train_loader:
-
         g = g.to(DEVICE)
         optimizer.zero_grad()
 
@@ -76,13 +75,13 @@ def eval(
     model,
     eval_loader,
 ):
-    """Validation & test loop. 
+    """Validation & test loop.
 
     :param model: Model
     :type model: class
     :param eval_loader: Data loader
     :type eval_loader: torch_geometric.loader.dataloader.DataLoader
-    :return: tuple including essential information to quantify network perfromance such as MAE, predirctions, labels etc. 
+    :return: tuple including essential information to quantify network perfromance such as MAE, predirctions, labels etc.
     :rtype: tuple
     """
     model.eval()
@@ -92,9 +91,7 @@ def eval(
     ys = []
 
     with torch.no_grad():
-
         for g in eval_loader:
-
             g = g.to(DEVICE)
             pred = model(g)
             mae = mae_loss(pred, g.rxn_trg)
@@ -106,7 +103,6 @@ def eval(
 
 
 if __name__ == "__main__":
-
     # python train.py -config 420 -mode a -cv 1 -early_stop 0
 
     # Make Folders for Results and Models
@@ -147,11 +143,31 @@ if __name__ == "__main__":
 
     # Initialize Model
     if args.mode == "a":
-        model = GraphTransformer(n_kernels=N_KERNELS, pooling_heads=POOLING_HEADS, mlp_dim=D_MLP, kernel_dim=D_KERNEL, embeddings_dim=D_EMBEDDING, qml=QML, geometry=GEOMETRY)
+        model = GraphTransformer(
+            n_kernels=N_KERNELS,
+            pooling_heads=POOLING_HEADS,
+            mlp_dim=D_MLP,
+            kernel_dim=D_KERNEL,
+            embeddings_dim=D_EMBEDDING,
+            qml=QML,
+            geometry=GEOMETRY,
+        )
     elif args.mode == "b":
-        model = EGNN(n_kernels=N_KERNELS, mlp_dim=D_MLP, kernel_dim=D_KERNEL, embeddings_dim=D_EMBEDDING, qml=QML, geometry=GEOMETRY)
+        model = EGNN(
+            n_kernels=N_KERNELS,
+            mlp_dim=D_MLP,
+            kernel_dim=D_KERNEL,
+            embeddings_dim=D_EMBEDDING,
+            qml=QML,
+            geometry=GEOMETRY,
+        )
     elif args.mode == "c":
-        model = FNN(fp_dim=FP_DIM, mlp_dim=D_MLP, kernel_dim=D_KERNEL, embeddings_dim=D_EMBEDDING)
+        model = FNN(
+            fp_dim=FP_DIM,
+            mlp_dim=D_MLP,
+            kernel_dim=D_KERNEL,
+            embeddings_dim=D_EMBEDDING,
+        )
 
     model = model.to(DEVICE)
 
@@ -168,7 +184,6 @@ if __name__ == "__main__":
     ev_losses = []
 
     if early_stop:
-
         # Get Datasets
         tran_ids, eval_ids, test_ids = get_rxn_ids()
         train_data = DataLSF(rxn_ids=tran_ids, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT)
@@ -182,7 +197,6 @@ if __name__ == "__main__":
         min_mae = 1000
 
         for epoch in range(1000):
-
             # Training and Eval Loops
             tr_l = train(model, optimizer, criterion, train_loader)
             ev_l, ev_ys, ev_pred = eval(model, eval_loader)
@@ -191,7 +205,6 @@ if __name__ == "__main__":
             scheduler.step()
 
             if ev_l <= min_mae:
-
                 # Define new min-loss
                 min_mae = ev_l
 
@@ -209,7 +222,6 @@ if __name__ == "__main__":
                 )
 
     else:
-
         # Get Datasets
         tran_ids, eval_ids, test_ids = get_rxn_ids()
         tran_ids += eval_ids
@@ -220,14 +232,12 @@ if __name__ == "__main__":
 
         # Training without Early Stopping
         for epoch in range(1000):
-
             # Training Loop
             tr_l = train(model, optimizer, criterion, train_loader)
             tr_losses.append(tr_l)
             scheduler.step()
 
             if epoch >= 999:
-
                 # Test model
                 te_l, te_ys, te_pred = eval(model, test_loader)
 

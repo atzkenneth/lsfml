@@ -17,10 +17,10 @@ import torch
 from PIL import Image
 from torch_geometric.data import Data
 
-from lsfqml.lsfqml.publication.literature.regioselectivity.graph_mapping import (
+from lsfml.literature.regioselectivity.graph_mapping import (
     get_regioselectivity,
 )
-from lsfqml.lsfqml.publication.literature.regioselectivity.net import (
+from lsfml.literature.regioselectivity.net import (
     Atomistic_EGNN,
 )
 
@@ -28,7 +28,7 @@ ATOMTYPE_DICT = {"H": 0, "C": 1, "N": 2, "O": 3, "F": 4, "P": 5, "S": 6, "Cl": 7
 
 
 def get_predictions(smiles, models):
-    """Main function to apply regioselectivity predioction given a SMILES-string and a model id. 
+    """Main function to apply regioselectivity predioction given a SMILES-string and a model id.
 
     :param smiles: SMILES-string
     :type smiles: str
@@ -39,7 +39,6 @@ def get_predictions(smiles, models):
     config = configparser.ConfigParser()
 
     for model_id in models:
-
         # Load model
         CONFIG_NAME = f"config_{model_id}.ini"
         config.read(CONFIG_PATH + CONFIG_NAME)
@@ -53,28 +52,32 @@ def get_predictions(smiles, models):
         QML = True if QML >= 1 else False
         GEOMETRY = True if GEOMETRY >= 1 else False
 
-        model = Atomistic_EGNN(N_KERNELS, D_MLP, D_KERNEL, D_EMBEDDING, QML, GEOMETRY)
+        model = Atomistic_EGNN(
+            n_kernels=N_KERNELS,
+            mlp_dim=D_MLP,
+            kernel_dim=D_KERNEL,
+            embeddings_dim=D_EMBEDDING,
+            qml=QML,
+            geometry=GEOMETRY,
+        )
 
         model.load_state_dict(
             torch.load(
-                f"models_production/config_{model_id}_1.pt",
+                f"models/config_{model_id}_1.pt",
                 map_location=torch.device("cpu"),
             )
         )
 
         for j, smi in enumerate(smiles):
-
             name = f"regiosel_{j}"
             print(name, smi)
             preds_stat = []
 
             for k in range(3):
-
                 seeds = [0xF00A, 0xF00B, 0xF00C, 0xF00E, 0xF00F, 0xF10D, 0xF20D, 0xF00D]
                 pred_list = []
 
                 for k in seeds:
-
                     (
                         atom_id,
                         ring_id,
@@ -158,7 +161,6 @@ def get_predictions(smiles, models):
 
 
 if __name__ == "__main__":
-
     os.makedirs("regiosel_imgs", exist_ok=True)
     smiles = [
         "c1cc(OC)cc2cc(C(=O)OCC)[nH]c12",

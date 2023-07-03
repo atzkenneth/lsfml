@@ -14,9 +14,18 @@ from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops
 from torch_geometric.utils.undirected import to_undirected
 from tqdm import tqdm
+from scipy.spatial.distance import pdist, squareform
 
 from lsfml.qml.prod import get_model
-from lsfml.utils import get_dict_for_embedding, HYBRIDISATIONS, AROMATOCITY, IS_RING, ATOMTYPES, QML_ATOMTYPES, UTILS_PATH
+from lsfml.utils import (
+    get_dict_for_embedding,
+    HYBRIDISATIONS,
+    AROMATOCITY,
+    IS_RING,
+    ATOMTYPES,
+    QML_ATOMTYPES,
+    UTILS_PATH,
+)
 
 QMLMODEL = get_model(gpu=False)
 
@@ -136,18 +145,10 @@ def get_info_from_smi(smi, radius):
 
     charges = QMLMODEL(qml_graph).unsqueeze(1).detach().numpy()
 
-    # get edges for 3d graph
-    edge1 = []
-    edge2 = []
-    for i in range(len(atomids)):
-        for j in range(len(atomids)):
-            if i != j:
-                dist = np.linalg.norm(crds_3d[j] - crds_3d[i])
-                if dist <= radius:
-                    edge1.append(i)
-                    edge2.append(j)
-
-    edge_3d = torch.from_numpy(np.array([edge1, edge2]))
+    # Get edges for 3d graph
+    distance_matrix = squareform(pdist(crds_3d))
+    np.fill_diagonal(distance_matrix, float("inf"))  # to remove self-loops
+    edge_3d = torch.from_numpy(np.vstack(np.where(distance_matrix <= radius)))
 
     return (
         atomids,
@@ -163,7 +164,6 @@ def get_info_from_smi(smi, radius):
 
 
 if __name__ == "__main__":
-
     df = pd.read_csv(os.path.join(UTILS_PATH, "data/literature_rxndata.csv"), encoding="unicode_escape")
 
     # Rxn id
@@ -196,11 +196,8 @@ if __name__ == "__main__":
     h5_path = os.path.join(UTILS_PATH, "data/literature_rxndata.h5")
 
     with h5py.File(h5_path, "w") as lsf_container:
-
         for idx, rxn_key in enumerate(tqdm(rxn_id)):
-
             try:
-
                 (
                     atom_id,
                     ring_id,
@@ -220,10 +217,7 @@ if __name__ == "__main__":
                 trg_rxn = trg[idx]
 
                 if np.isnan(trg_rxn):
-                    print(rxn_key, trg_rxn)
-                    print(float(trg_rxn))
                     trg_rxn = 0.0
-                    print(float(trg_rxn))
 
                 # Create group in h5 for this id
                 lsf_container.create_group(str(rxn_key))
