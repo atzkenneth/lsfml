@@ -15,7 +15,6 @@ lsf.*
 *.pdb
 *.DS_Store
 *.cdxml
-*.xlsx
 *.out
 *.txtx
 *.png
