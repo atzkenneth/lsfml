@@ -2,7 +2,7 @@
 
 ![](lsfml/img/NCHEM-22102062A_figure1.png)
 
-This repository contains a reference implementation to preprocess the data, as well as to train and apply the graph machine learning models introduced in David F. Nippa, Kenneth Atz, et al. Journal, X, XX (2023).
+This repository contains a reference implementation to preprocess the data, as well as to train and apply the graph machine learning models introduced in David F. Nippa, Kenneth Atz, Remo Hohler, Alex T. Müller, Andreas Marx, Christian Bartelmus, Georg Wuitschik, Irene Marzuoli, Vera Jost, Jens Wolfard, Martin Binder, Antonia F. Stepan, David B. Konrad, Uwe Grether, Rainer E. Martin & Gisbert Schneider, Journal, X, XX (2023).
 
 
 ## 1. Environment
