@@ -1,6 +1,6 @@
 # Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning
 
-![](img/NCHEM-22102062A_figure1.png)
+![](lsfml/img/NCHEM-22102062A_figure1.png)
 
 This repository contains a reference implementation to preprocess the data, as well as to train and apply the graph machine learning models introduced in David F. Nippa, Kenneth Atz, et al. Journal, X, XX (2023).
 
@@ -9,6 +9,7 @@ This repository contains a reference implementation to preprocess the data, as w
 Create and activate the lsfml environment. 
 
 ```
+cd envs/
 conda env create -f environment.yml
 conda activate lsfml
 poetry install
@@ -150,7 +151,7 @@ Trained models can then be applied via `production.py`, where in the `__main__` 
 python production.py > selected_161.txt
 ```
 The individual predictions are then stored in figures like the following: 
-![](img/regio_example.jpg)
+![](lsfml/img/regio_example.jpg)
 
 ## 9. Additional neural network modules
 `modules/`contains additional essential neural network modules used by the different graph neural networks. `gnn_blocks.py` contains the message passing functions for 2D and 3D graphs that are used by all GNNs and GTNNs. `gmt.py` contains the graph multiset transformer-based pooling that is used by all GTNNs. `pygdataset.py` contains a specific dataloader to generate the graph data objects for the processing of PyG.
