@@ -15,7 +15,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 
 
 def get_model(gpu=True):
-    """Returns loaded and initialized QML model. 
+    """Returns loaded and initialized QML model.
 
     :param gpu: Running model on GPU (True or False), defaults to True
     :type gpu: bool, optional
@@ -66,5 +66,4 @@ def get_model(gpu=True):
 
 
 if __name__ == "__main__":
-
     get_model()

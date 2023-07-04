@@ -57,7 +57,6 @@ class MAB(torch.nn.Module):
         graph: Optional[Tuple[Tensor, Tensor, Tensor]] = None,
         mask: Optional[Tensor] = None,
     ) -> Tensor:
-
         Q = self.fc_q(Q)
 
         if graph is not None:
