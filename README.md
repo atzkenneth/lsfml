@@ -66,7 +66,7 @@ ls qml/
 config_14000.ini  model1.pkl  prod.py qml_net.py  test_mols  test.py
 python test.py 
 >>> QML model has been sent to cpu
->>> Partail charge prediction is conducted with the following mean absolute errors:
+>>> Partial charge prediction is conducted with the following mean absolute errors:
 >>> CHEMBL1 0.0039913069590710925
 >>> CHEMBL2 0.002572119902126642
 >>> CHEMBL3 0.0026494266223815776

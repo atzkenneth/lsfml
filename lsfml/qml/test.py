@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     maes = []
 
-    print("Partail charge prediction is conducted with the following mean absolute errors:")
+    print("Partial charge prediction is conducted with the following mean absolute errors:")
 
     for sdf in mol_files:
         mae = compare_charges(sdf)
