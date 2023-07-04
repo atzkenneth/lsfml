@@ -20,6 +20,7 @@ def weights_init(m):
         nn.init.xavier_uniform_(m.weight)
         nn.init.zeros_(m.bias)
 
+
 def broadcast(src: torch.Tensor, other: torch.Tensor, dim: int):
     if dim < 0:
         dim = other.dim() + dim
@@ -31,9 +32,14 @@ def broadcast(src: torch.Tensor, other: torch.Tensor, dim: int):
     src = src.expand_as(other)
     return src
 
-def scatter_sum(src: torch.Tensor, index: torch.Tensor, dim: int = -1,
-                out: Optional[torch.Tensor] = None,
-                dim_size: Optional[int] = None) -> torch.Tensor:
+
+def scatter_sum(
+    src: torch.Tensor,
+    index: torch.Tensor,
+    dim: int = -1,
+    out: Optional[torch.Tensor] = None,
+    dim_size: Optional[int] = None,
+) -> torch.Tensor:
     index = broadcast(index, src, dim)
     if out is None:
         size = list(src.size())
@@ -50,8 +56,7 @@ def scatter_sum(src: torch.Tensor, index: torch.Tensor, dim: int = -1,
 
 
 class EGNN_sparse(MessagePassing):
-    """torch geometric message-passing layer for 2D molecular graphs.
-    """
+    """torch geometric message-passing layer for 2D molecular graphs."""
 
     def __init__(self, feats_dim, m_dim=32, dropout=0.1, aggr="add", **kwargs):
         """Initialization of the 2D message passing layer.
@@ -142,7 +147,7 @@ class EGNN_sparse(MessagePassing):
         return m_ij
 
     def propagate(self, edge_index: Adj, size: Size = None, **kwargs):
-        """Overall propagation within the message passing. 
+        """Overall propagation within the message passing.
 
         :param edge_index: Edge indices.
         :type edge_index: Adj
@@ -182,7 +187,7 @@ def fourier_encode_dist(x, num_encodings=4, include_self=True):
     :type num_encodings: int, optional
     :param include_self: Option to include absolute distance, defaults to True
     :type include_self: bool, optional
-    :return: Fourier features. 
+    :return: Fourier features.
     :rtype: Tensor
     """
     x = x.unsqueeze(-1)
@@ -195,8 +200,7 @@ def fourier_encode_dist(x, num_encodings=4, include_self=True):
 
 
 class EGNN_sparse3D(MessagePassing):
-    """torch geometric message-passing layer for 3D molecular graphs.
-    """
+    """torch geometric message-passing layer for 3D molecular graphs."""
 
     def __init__(self, feats_dim, pos_dim=3, m_dim=32, dropout=0.1, fourier_features=16, aggr="add", **kwargs):
         """Initialization of the 3D message passing layer.
@@ -304,7 +308,7 @@ class EGNN_sparse3D(MessagePassing):
         return m_ij
 
     def propagate(self, edge_index: Adj, size: Size = None, **kwargs):
-        """Overall propagation within the message passing. 
+        """Overall propagation within the message passing.
 
         :param edge_index: Edge indices.
         :type edge_index: Adj

@@ -18,7 +18,7 @@ os.makedirs(FOLDER_NAME, exist_ok=True)
 
 
 def get_smiles_2_rxn_dict(smiles, yes_no):
-    """Creates a dict for SMILES-strings to sum of successful reactions. 
+    """Creates a dict for SMILES-strings to sum of successful reactions.
 
     :param smiles: SMILES-strings
     :type smiles: list[str]
@@ -30,7 +30,6 @@ def get_smiles_2_rxn_dict(smiles, yes_no):
     smiles_2_rxn_dict = {}
 
     for i, smi in enumerate(tqdm(smiles)):
-
         if smi not in smiles_2_rxn_dict:
             smiles_2_rxn_dict[smi] = 0
             smiles_2_rxn_dict[smi] += yes_no[i]
@@ -42,7 +41,7 @@ def get_smiles_2_rxn_dict(smiles, yes_no):
 
 
 def get_smiles_2_negative_rxn_dict(smiles, yes_no):
-    """Creates a dict for SMILES-strings to sum of failed reactions. 
+    """Creates a dict for SMILES-strings to sum of failed reactions.
 
     :param smiles: SMILES-strings
     :type smiles: list[str]
@@ -54,7 +53,6 @@ def get_smiles_2_negative_rxn_dict(smiles, yes_no):
     smiles_2_rxn_dict = {}
 
     for i, smi in enumerate(tqdm(smiles)):
-
         failure = abs(yes_no[i] - 1)
 
         if smi not in smiles_2_rxn_dict:
@@ -68,15 +66,15 @@ def get_smiles_2_negative_rxn_dict(smiles, yes_no):
 
 
 def plt_barplot(sorted_model_dict, model_dict_std, name, ylabel, xlabel, ylim, imgsize1, imgsize2):
-    """Creates a bar plot given a list of mean values and standard deviations. 
+    """Creates a bar plot given a list of mean values and standard deviations.
 
     :param sorted_model_dict: Dict for mean values.
     :type sorted_model_dict: dict
     :param model_dict_std: Dict for standard deviations.
     :type model_dict_std: dict
-    :param name: File name. 
+    :param name: File name.
     :type name: str
-    :param ylabel: Y-axis label. 
+    :param ylabel: Y-axis label.
     :type ylabel: str
     :param xlabel: X-axis label.
     :type xlabel: str
@@ -115,15 +113,15 @@ def plt_barplot(sorted_model_dict, model_dict_std, name, ylabel, xlabel, ylim, i
 def plt_barplot_two_colors(
     sorted_model_dict, model_dict_std, name, ylabel, xlabel, ylim, imgsize1, imgsize2, dict_to_check
 ):
-    """Creates a bar plot given a list of mean values and standard deviations. Additionally, specific bars can be colored in a second color. 
+    """Creates a bar plot given a list of mean values and standard deviations. Additionally, specific bars can be colored in a second color.
 
     :param sorted_model_dict: Dict for mean values.
     :type sorted_model_dict: dict
     :param model_dict_std: Dict for standard deviations.
     :type model_dict_std: dict
-    :param name: File name. 
+    :param name: File name.
     :type name: str
-    :param ylabel: Y-axis label. 
+    :param ylabel: Y-axis label.
     :type ylabel: str
     :param xlabel: X-axis label.
     :type xlabel: str
@@ -133,7 +131,7 @@ def plt_barplot_two_colors(
     :type imgsize1: int
     :param imgsize2: Figure size 2.
     :type imgsize2: int
-    :param dict_to_check: Name of keys for second color. 
+    :param dict_to_check: Name of keys for second color.
     :type dict_to_check: str
     """
     plt.figure(figsize=(imgsize1, imgsize2))
@@ -172,15 +170,15 @@ def plt_barplot_two_colors(
 def plt_barplot_with_adapt_color(
     sorted_model_dict, model_dict_std, name, ylabel, xlabel, ylim, imgsize1, imgsize2, bar_color
 ):
-    """Creates a bar plot given a list of mean values and standard deviations. Additionally, the color can be specified. 
+    """Creates a bar plot given a list of mean values and standard deviations. Additionally, the color can be specified.
 
     :param sorted_model_dict: Dict for mean values.
     :type sorted_model_dict: dict
     :param model_dict_std: Dict for standard deviations.
     :type model_dict_std: dict
-    :param name: File name. 
+    :param name: File name.
     :type name: str
-    :param ylabel: Y-axis label. 
+    :param ylabel: Y-axis label.
     :type ylabel: str
     :param xlabel: X-axis label.
     :type xlabel: str
@@ -219,7 +217,7 @@ def plt_barplot_with_adapt_color(
 
 
 def get_fg_occurence(smiles):
-    """Counts successful reactions per functional group in a dict of SMILES-srings to reaction outcome. 
+    """Counts successful reactions per functional group in a dict of SMILES-srings to reaction outcome.
 
     :param smiles: SMILES-strings (str): reaction outcome {int}
     :type smiles: dict
@@ -231,7 +229,6 @@ def get_fg_occurence(smiles):
     uniques = list(set(smiles))
 
     for u in uniques:
-
         try:
             m = Chem.MolFromSmiles(u)
             fgs = identify_functional_groups(m)
@@ -242,7 +239,6 @@ def get_fg_occurence(smiles):
                 tmp_fgs.append(f[PARAMS[0]])
 
             for fg in tmp_fgs:
-
                 if fg not in fg_dict:
                     fg_dict[fg] = 1
 
@@ -255,7 +251,7 @@ def get_fg_occurence(smiles):
 
 
 def get_fg_tollerance(smiles_2_rxn_dict):
-    """Counts functional groups in a list of SMILES-srings. 
+    """Counts functional groups in a list of SMILES-srings.
 
     :param smiles: SMILES-strings
     :type smiles: list[str]
@@ -265,7 +261,6 @@ def get_fg_tollerance(smiles_2_rxn_dict):
     fg_tollerance_dict = {}
 
     for smi in tqdm(smiles_2_rxn_dict):
-
         rxn = smiles_2_rxn_dict[smi]
 
         try:
@@ -278,7 +273,6 @@ def get_fg_tollerance(smiles_2_rxn_dict):
                 tmp_fgs.append(f[PARAMS[0]])
 
             for fg in tmp_fgs:
-
                 if fg not in fg_tollerance_dict:
                     fg_tollerance_dict[fg] = rxn
 
@@ -292,7 +286,6 @@ def get_fg_tollerance(smiles_2_rxn_dict):
 
 
 if __name__ == "__main__":
-
     # Smiles from lsf-space
     df = pd.read_csv("../data/experimental_rxndata.csv")
     smiles = list(df["educt"])

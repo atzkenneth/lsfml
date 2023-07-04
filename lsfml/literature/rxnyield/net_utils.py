@@ -17,7 +17,7 @@ random.seed(2)
 def get_rxn_ids(
     data,
 ):
-    """Generates the data set split into training, validation and test sets. 
+    """Generates the data set split into training, validation and test sets.
 
     :param data: Path to h5 file, including preprocessed data, defaults to "../../data/literature_rxndata.h5""
     :type data: str, optional
@@ -47,7 +47,7 @@ class DataLSF(Dataset):
         graph_dim,
         fingerprint,
     ):
-        """Initialization. 
+        """Initialization.
 
         :param rxn_ids: Reaction IDs from the given split (train, eval, test)
         :type rxn_ids: list[str]
@@ -82,7 +82,7 @@ class DataLSF(Dataset):
 
         :param idx: Reaction ID
         :type idx: str
-        :return: Input graph for the neural network. 
+        :return: Input graph for the neural network.
         :rtype: torch_geometric.loader.dataloader.DataLoader
         """
         # int to rxn_id

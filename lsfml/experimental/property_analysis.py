@@ -3,7 +3,7 @@
 #
 # Copyright (©) 2023 Kenneth Atz, & Gisbert Schneider (ETH Zurich)
 
-from rdkit import Chem, DataStructs
+from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors, Draw
 
 import pandas as pd

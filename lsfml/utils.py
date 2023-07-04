@@ -12,6 +12,7 @@ import os
 
 UTILS_PATH = os.path.dirname(__file__)
 
+
 def mae_loss(x, y):
     """Calculates the MAE loss.
 
@@ -28,11 +29,11 @@ def mae_loss(x, y):
 def get_dict_for_embedding(list):
     """Creates a dictionary from a list of strings as keys and values form 0 to N, where N = len(list).
 
-    :param list: List of strings. 
+    :param list: List of strings.
     :type list:  list[str]
-    :return: dictionary, mapping each string to an integer. 
+    :return: dictionary, mapping each string to an integer.
     :rtype: dirct[str] = int
-    """    
+    """
 
     list_dict = {}
     list_counter = Counter(list)
@@ -55,7 +56,6 @@ def get_fp_from_smi(smi):
     mol = Chem.AddHs(mol_no_Hs)
 
     return np.array(rdMolDescriptors.GetMorganFingerprintAsBitVect(mol, 2, nBits=256))
-
 
 
 HYBRIDISATIONS = [

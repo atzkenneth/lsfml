@@ -14,8 +14,7 @@ from lsfml.modules.gnn_blocks import (
 
 
 class Atomistic_EGNN(nn.Module):
-    """Atomistic graph neural network (aGNN) for regioselectivity predictions. 
-    """
+    """Atomistic graph neural network (aGNN) for regioselectivity predictions."""
 
     def __init__(self, n_kernels=3, mlp_dim=512, kernel_dim=64, embeddings_dim=64, qml=True, geometry=True):
         """Initialization of aGNN
@@ -112,9 +111,9 @@ class Atomistic_EGNN(nn.Module):
     def forward(self, g_batch):
         """Forward pass of the atomistic GNN.
 
-        :param g_batch: Input graph. 
+        :param g_batch: Input graph.
         :type g_batch: class
-        :return: Regioselectivity, 0 - 1 per atom. 
+        :return: Regioselectivity, 0 - 1 per atom.
         :rtype: Tensor
         """
         if self.qml:

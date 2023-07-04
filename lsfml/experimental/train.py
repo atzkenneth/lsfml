@@ -3,8 +3,6 @@
 #
 # Copyright (©) 2023 Kenneth Atz (ETH Zurich)
 
-from rdkit import Chem
-from rdkit.Chem import rdMolDescriptors
 
 import argparse
 import configparser
@@ -193,13 +191,57 @@ if __name__ == "__main__":
 
     if early_stop:
         # Get Datasets
-        tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA, split=SPLIT, eln=ELN, testset=args.testset)
-        train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
-        train_loader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        eval_data = DataLSF(rxn_ids=eval_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
-        eval_loader = DataLoader(eval_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        test_data = DataLSF(rxn_ids=test_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
-        test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+        tran_ids, eval_ids, test_ids = get_rxn_ids(
+            data=RXN_DATA,
+            split=SPLIT,
+            eln=ELN,
+            testset=args.testset,
+        )
+        train_data = DataLSF(
+            rxn_ids=tran_ids,
+            data=RXN_DATA,
+            data_substrates=SUB_DATA,
+            target=TARGET,
+            graph_dim=GRAPH_DIM,
+            fingerprint=FINGERPRINT,
+            conformers=CONFORMER_LIST,
+        )
+        train_loader = DataLoader(
+            train_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
+        eval_data = DataLSF(
+            rxn_ids=eval_ids,
+            data=RXN_DATA,
+            data_substrates=SUB_DATA,
+            target=TARGET,
+            graph_dim=GRAPH_DIM,
+            fingerprint=FINGERPRINT,
+            conformers=CONFORMER_LIST,
+        )
+        eval_loader = DataLoader(
+            eval_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
+        test_data = DataLSF(
+            rxn_ids=test_ids,
+            data=RXN_DATA,
+            data_substrates=SUB_DATA,
+            target=TARGET,
+            graph_dim=GRAPH_DIM,
+            fingerprint=FINGERPRINT,
+            conformers=CONFORMER_LIST,
+        )
+        test_loader = DataLoader(
+            test_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
 
         # Training with Early Stopping
         min_mae = 1000
@@ -241,12 +283,43 @@ if __name__ == "__main__":
 
     else:
         # Get Datasets
-        tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA, split=SPLIT, eln=ELN, testset=args.testset)
+        tran_ids, eval_ids, test_ids = get_rxn_ids(
+            data=RXN_DATA,
+            split=SPLIT,
+            eln=ELN,
+            testset=args.testset,
+        )
         tran_ids += eval_ids
-        train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
-        train_loader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        test_data = DataLSF(rxn_ids=test_ids, data=RXN_DATA, data_substrates=SUB_DATA, target=TARGET, graph_dim=GRAPH_DIM, fingerprint=FINGERPRINT, conformers=CONFORMER_LIST)
-        test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+        train_data = DataLSF(
+            rxn_ids=tran_ids,
+            data=RXN_DATA,
+            data_substrates=SUB_DATA,
+            target=TARGET,
+            graph_dim=GRAPH_DIM,
+            fingerprint=FINGERPRINT,
+            conformers=CONFORMER_LIST,
+        )
+        train_loader = DataLoader(
+            train_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
+        test_data = DataLSF(
+            rxn_ids=test_ids,
+            data=RXN_DATA,
+            data_substrates=SUB_DATA,
+            target=TARGET,
+            graph_dim=GRAPH_DIM,
+            fingerprint=FINGERPRINT,
+            conformers=CONFORMER_LIST,
+        )
+        test_loader = DataLoader(
+            test_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
 
         # Training without Early Stopping
         for epoch in range(1000):
@@ -259,8 +332,8 @@ if __name__ == "__main__":
                 # Test model
                 te_l, te_ys, te_pred = eval(model, test_loader)
 
-                ys = [item for sublist in te_ys for item in sublist]
-                pred = [item for sublist in te_pred for item in sublist]
+                ys_saved = [item for sublist in te_ys for item in sublist]
+                pred_saved = [item for sublist in te_pred for item in sublist]
 
                 # Save Model and Save Loos + Predictions
                 if SPLIT == "eln":

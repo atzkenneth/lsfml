@@ -12,8 +12,7 @@ from torch_geometric.typing import Adj, Size, Tensor
 
 
 class DeltaNetAtomic(nn.Module):
-    """Atomistic graph neural network (aGNN) for partial charge predictions.
-    """
+    """Atomistic graph neural network (aGNN) for partial charge predictions."""
 
     def __init__(
         self,
@@ -148,7 +147,7 @@ def fourier_encode_dist(x, num_encodings=4, include_self=True):
     :type num_encodings: int, optional
     :param include_self: Option to include absolute distance, defaults to True
     :type include_self: bool, optional
-    :return: Fourier features. 
+    :return: Fourier features.
     :rtype: Tensor
     """
     x = x.unsqueeze(-1)
@@ -161,8 +160,7 @@ def fourier_encode_dist(x, num_encodings=4, include_self=True):
 
 
 class EGNN_sparse(MessagePassing):
-    """torch geometric message-passing layer for 3D molecular graphs.
-    """
+    """torch geometric message-passing layer for 3D molecular graphs."""
 
     def __init__(
         self, feats_dim, pos_dim=3, edge_attr_dim=0, m_dim=32, dropout=0.1, fourier_features=32, aggr="mean", **kwargs
@@ -283,7 +281,7 @@ class EGNN_sparse(MessagePassing):
         return m_ij
 
     def propagate(self, edge_index: Adj, size: Size = None, **kwargs):
-        """Overall propagation within the message passing. 
+        """Overall propagation within the message passing.
 
         :param edge_index: Edge indices.
         :type edge_index: Adj
