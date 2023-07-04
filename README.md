@@ -162,7 +162,7 @@ gmt.py  gnn_blocks.py  pygdataset.py
 ## 10. License
 The software was developed at ETH Zurich and is licensed by the user-friendy MIT license, i.e. discribed in `LICENSE`.
 ```
-Copyright (©) 2023 Kenneth Atz (ETH Zurich)
+Copyright (©) 2023 Kenneth Atz, & Gisbert Schneider(ETH Zurich)
 ```
 
 ## 11. Citation

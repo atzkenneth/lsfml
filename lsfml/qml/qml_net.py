@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8
 #
-# Copyright (©) 2022 Kenneth Atz (ETH Zurich), David F. Nippa (F. Hoffmann-La Roche Ltd) & Alex T. Müller (F. Hoffmann-La Roche Ltd)
+# Copyright (©) 2023 Kenneth Atz, & Gisbert Schneider (ETH Zurich)
 
 import torch
 import torch.nn as nn

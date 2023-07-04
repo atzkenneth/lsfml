@@ -1,3 +1,8 @@
+#! /usr/bin/env python
+# -*- coding: utf-8
+#
+# Copyright (©) 2023 Kenneth Atz, & Gisbert Schneider (ETH Zurich)
+
 from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors
 import numpy as np
