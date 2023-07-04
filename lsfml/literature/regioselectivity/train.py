@@ -3,8 +3,6 @@
 #
 # Copyright (©) 2023 Kenneth Atz, & Gisbert Schneider (ETH Zurich)
 
-from rdkit import Chem
-from rdkit.Chem import rdMolDescriptors
 
 import argparse
 import configparser
@@ -174,13 +172,42 @@ if __name__ == "__main__":
 
     if early_stop:
         # Get Datasets
-        tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA)
-        train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, graph_dim=GRAPH_DIM)
-        train_loader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        eval_data = DataLSF(rxn_ids=eval_ids, data=RXN_DATA, graph_dim=GRAPH_DIM)
-        eval_loader = DataLoader(eval_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        test_data = DataLSF(rxn_ids=test_ids, data=RXN_DATA, graph_dim=GRAPH_DIM)
-        test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+        tran_ids, eval_ids, test_ids = get_rxn_ids(
+            data=RXN_DATA,
+        )
+        train_data = DataLSF(
+            rxn_ids=tran_ids,
+            data=RXN_DATA,
+            graph_dim=GRAPH_DIM,
+        )
+        train_loader = DataLoader(
+            train_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
+        eval_data = DataLSF(
+            rxn_ids=eval_ids,
+            data=RXN_DATA,
+            graph_dim=GRAPH_DIM,
+        )
+        eval_loader = DataLoader(
+            eval_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
+        test_data = DataLSF(
+            rxn_ids=test_ids,
+            data=RXN_DATA,
+            graph_dim=GRAPH_DIM,
+        )
+        test_loader = DataLoader(
+            test_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
 
         # Training with Early Stopping
         min_mae = 100
@@ -216,12 +243,32 @@ if __name__ == "__main__":
                 )
     else:
         # Get Datasets
-        tran_ids, eval_ids, test_ids = get_rxn_ids(data=RXN_DATA)
+        tran_ids, eval_ids, test_ids = get_rxn_ids(
+            data=RXN_DATA,
+        )
         tran_ids += eval_ids
-        train_data = DataLSF(rxn_ids=tran_ids, data=RXN_DATA, graph_dim=GRAPH_DIM)
-        train_loader = DataLoader(train_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
-        test_data = DataLSF(rxn_ids=test_ids, data=RXN_DATA, graph_dim=GRAPH_DIM)
-        test_loader = DataLoader(test_data, batch_size=BATCH_SIZE, shuffle=True, num_workers=2)
+        train_data = DataLSF(
+            rxn_ids=tran_ids,
+            data=RXN_DATA,
+            graph_dim=GRAPH_DIM,
+        )
+        train_loader = DataLoader(
+            train_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
+        test_data = DataLSF(
+            rxn_ids=test_ids,
+            data=RXN_DATA,
+            graph_dim=GRAPH_DIM,
+        )
+        test_loader = DataLoader(
+            test_data,
+            batch_size=BATCH_SIZE,
+            shuffle=True,
+            num_workers=2,
+        )
 
         # Training without Early Stopping
         for epoch in range(1000):

@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import torch
 from rdkit import Chem
-from rdkit.Chem import AllChem, rdMolDescriptors
+from rdkit.Chem import AllChem
 from torch_geometric.data import Data
 from torch_geometric.utils import add_self_loops
 from torch_geometric.utils.undirected import to_undirected
