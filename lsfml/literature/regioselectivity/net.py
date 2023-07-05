@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8
 #
-# Copyright (©) 2023 Kenneth Atz, & Gisbert Schneider (ETH Zurich)
+# Copyright (©) 2023, ETH Zurich
 
 import torch
 import torch.nn as nn

@@ -20,7 +20,6 @@ lsf.*
 *.xlsx
 *.out
 *.txtx
-*.png
 *.jpg
 *.csv
 *.ini

@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8
 #
-# Copyright (©) 2023 Kenneth Atz (ETH Zurich)
-
+# Copyright (©) 2023, ETH Zurich
 
 import argparse
 import configparser
