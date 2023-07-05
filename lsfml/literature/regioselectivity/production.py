@@ -28,7 +28,7 @@ ATOMTYPE_DICT = {"H": 0, "C": 1, "N": 2, "O": 3, "F": 4, "P": 5, "S": 6, "Cl": 7
 
 
 def get_predictions(smiles, models):
-    """Main function to apply regioselectivity predioction given a SMILES-string and a model id.
+    """Main function to apply regioselectivity prediction given a SMILES-string and a model id.
 
     :param smiles: SMILES-string
     :type smiles: str
