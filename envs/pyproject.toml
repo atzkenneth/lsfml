@@ -1,9 +1,14 @@
 [tool.poetry]
 name = "lsfml"
-version = "0.0.1"
+version = "0.1.0"
 description = "Reaction predcition with PyTorch Geometric"
 authors = ["Kenneth Atz <kenatz@ethz.ch>",]
 license = "See License file"
+readme = "README.md"
+
+homepage = "https://github.com/atzkenneth/lsfml"
+repository = "https://github.com/atzkenneth/lsfml"
+documentation = "https://github.com/atzkenneth/lsfml"
 
 [tool.poetry.dependencies]
 # pip packages

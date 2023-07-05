@@ -58,8 +58,8 @@ def get_hist(fname, wgt, rot, hba, hbd, psa, rng, sp3, ste, name, bins):
     :param rng: Number of rings
     :param sp3: Fraction of sp3 centers.
     :param ste: Number of stereogenic centers.
-    :param name: Name used to save the plot. 
-    :param bins: Number of bins for each histogram. 
+    :param name: Name used to save the plot.
+    :param bins: Number of bins for each histogram.
     """
 
     fig = plt.figure(figsize=(40, 16))
@@ -134,7 +134,7 @@ def get_propertiest(smiles):
     """Calculates molecular properties given a list of SMILES-stings.
 
     :param smiles: SMILES-sting.
-    :return: List of molecular properties. 
+    :return: List of molecular properties.
     :rtype: tuple(lists)
     """
 
@@ -160,14 +160,14 @@ def get_propertiest(smiles):
 
 
 def get_filtered_smiles_and_fps(smiles, drugid, drname, max_mwt, min_mwt):
-    """Filters SMILES-list based on different filter criteria (e.g. molecular weight). 
+    """Filters SMILES-list based on different filter criteria (e.g. molecular weight).
 
     :param smiles: SMILES-strings.
     :param drugid: ID of SMILES-strings.
     :param drname: Name of SMILES-strings.
-    :param max_mwt: Upper molecular weight cut off. 
-    :param min_mwt: Lower molecular weight cut off. 
-    :return: SMILES-strings and their 2 IDs as lists. 
+    :param max_mwt: Upper molecular weight cut off.
+    :param min_mwt: Lower molecular weight cut off.
+    :return: SMILES-strings and their 2 IDs as lists.
     :rtype: tuple(lists)
     """
 
@@ -190,10 +190,10 @@ def get_filtered_smiles_and_fps(smiles, drugid, drname, max_mwt, min_mwt):
 
 
 def get_similarity_matrix(fps):
-    """Creates a similarity matrix given a list of fingerprint verctors. 
+    """Creates a similarity matrix given a list of fingerprint verctors.
 
     :param fps: List of fingerprint verctors.
-    :return: Similarity matrix. 
+    :return: Similarity matrix.
     :rtype: np.ndarray
     """
 
@@ -223,9 +223,9 @@ def get_clusters(matrix, n_clusters):
 
 
 def get_coloured_pca(fname, matrix, labels, name, two_d=False, pointsize=30):
-    """Creates colored principal component analysis (PCA) plot given a similarity matrix and cluster labels. 
+    """Creates colored principal component analysis (PCA) plot given a similarity matrix and cluster labels.
 
-    :param fname: File name. 
+    :param fname: File name.
     :param matrix: Similarity matrix.
     :param labels: Cluster labels.
     :param name: Name to save the plot.
@@ -282,10 +282,10 @@ def get_coloured_pca(fname, matrix, labels, name, two_d=False, pointsize=30):
 
 
 def SaveXlsxFromFrame(frame, outFile, molCols=["ROMol"], size=(300, 300)):
-    """Saves a csv file as xlsx file with molecules as figures. 
+    """Saves a csv file as xlsx file with molecules as figures.
 
     :param frame: Data frame.
-    :param outFile: Name of output file. 
+    :param outFile: Name of output file.
     :param molCols: Column where the molecules can be found (can be >1), defaults to ["ROMol"]
     :type molCols: list, optional
     :param size: Size of the Figures added, defaults to (300, 300)
@@ -333,12 +333,12 @@ def SaveXlsxFromFrame(frame, outFile, molCols=["ROMol"], size=(300, 300)):
 
 
 def save_clusters_to_csv_cosine(fname, smi_passed, drug_id, drug_name, matrix, num_clusters, name_1, name_2):
-    """Saves clusters to a csv file where the molecules are sorted by their cosine distance to the centroid. 
+    """Saves clusters to a csv file where the molecules are sorted by their cosine distance to the centroid.
 
-    :param fname: File name. 
-    :param smi_passed: List of SMILES-string. 
-    :param drug_id: List of IDs of SMILES-stirngs. 
-    :param drug_name: List of names of SMILES-stirngs. 
+    :param fname: File name.
+    :param smi_passed: List of SMILES-string.
+    :param drug_id: List of IDs of SMILES-stirngs.
+    :param drug_name: List of names of SMILES-stirngs.
     :param matrix: Similarity matrix.
     :param num_clusters: Number of clusters.
     :param name_1: Column name used for IDs.
@@ -346,7 +346,6 @@ def save_clusters_to_csv_cosine(fname, smi_passed, drug_id, drug_name, matrix, n
     """
 
     for number in range(num_clusters):
-
         print(f"Ranking cluster {number} by cosine distance to cluster centroid:")
 
         smiles_cluster, drugid_cluster, drname_cluster, matrix_cluster = [], [], [], []
@@ -412,12 +411,12 @@ def save_clusters_to_csv_cosine(fname, smi_passed, drug_id, drug_name, matrix, n
 
 
 def df_to_csv(fname, drug_id, drug_name, smi_passed, name_1, name_2):
-    """Saves given data frame to csv (used to save each cluster individually). 
+    """Saves given data frame to csv (used to save each cluster individually).
 
     :param fname: File name.
-    :param drug_id: List of IDs of SMILES-stirngs. 
-    :param drug_name: List of names of SMILES-stirngs. 
-    :param smi_passed: List of SMILES-string. 
+    :param drug_id: List of IDs of SMILES-stirngs.
+    :param drug_name: List of names of SMILES-stirngs.
+    :param smi_passed: List of SMILES-string.
     :param name_1: Column name used for IDs.
     :param name_2: Column name used for names.
     """
@@ -448,14 +447,15 @@ def df_to_csv(fname, drug_id, drug_name, smi_passed, name_1, name_2):
 
 
 if __name__ == "__main__":
-
     # Initialize arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument("-xlsx", type=str, default="drugs_data")
+    parser.add_argument("-file", type=str, default="drugs_data.tsv")
+    parser.add_argument("-delim", type=str, default="\t")
+    parser.add_argument("-id1", type=str, default="DrugID")
+    parser.add_argument("-id2", type=str, default="DrugName")
+    parser.add_argument("-n_clust", type=int, default=8)
     parser.add_argument("-min_mwt", type=int, default=200)
     parser.add_argument("-max_mwt", type=int, default=800)
-    parser.add_argument("-id1", type=str, default="Drug_ID")
-    parser.add_argument("-id2", type=str, default="Drug Name")
     args = parser.parse_args()
 
     # Make folder
@@ -463,13 +463,10 @@ if __name__ == "__main__":
     os.makedirs(fname, exist_ok=True)
 
     # Read xlsx
-    drug_data = pd.read_excel(f"../data/{args.xlsx}.xlsx", engine="openpyxl")
+    drug_data = pd.read_csv(f"../data/{args.file}", delimiter=f"{args.delim}")
     smiles = list(drug_data["SMILES"])
     drugid = list(drug_data[args.id1])
     drname = list(drug_data[args.id2])
-
-    # define number of clusters
-    number_of_clusters = 8
 
     # Gets all properties from smiles list
     print(f"Calculating molecular properties of {len(smiles)} drug molecules:")
@@ -498,8 +495,8 @@ if __name__ == "__main__":
     matrix = get_similarity_matrix(fps)
 
     # Cluster similarity-matrix, get cluster labels and plot coloured PCA
-    print(f"Cluster the calculated matrix into {number_of_clusters} clusters:")
-    labels = get_clusters(matrix, number_of_clusters)
+    print(f"Cluster the calculated matrix into {args.n_clust} clusters:")
+    labels = get_clusters(matrix, args.n_clust)
     get_coloured_pca(fname, matrix, labels, "pca_all_dimesnions", two_d=False, pointsize=30)
     get_coloured_pca(fname, matrix, labels, "pca_two_dimesnions", two_d=True, pointsize=30)
 
@@ -510,7 +507,7 @@ if __name__ == "__main__":
         drug_id,
         drug_name,
         matrix,
-        number_of_clusters,
+        args.n_clust,
         args.id1,
         args.id2,
     )

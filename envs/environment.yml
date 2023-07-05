@@ -3,18 +3,18 @@ name: lsfml
 channels:
   - pytorch
   - conda-forge
-  - pyg 
+  - pyg
   - nodefaults
   - nvidia
 dependencies:
-  - python =3.8
-  - numpy =<1.20 
+  - python=3.8
+  - numpy=<1.20
   - libcurl
-  - pytorch =1.13.1
-  - cudatoolkit =11.7
-  - torchvision =0.14.1
-  - torchaudio =0.13.1
-  - pyg =2.3.0
+  - pytorch=1.13.1
+  - cudatoolkit=11.7
+  - torchvision=0.14.1
+  - torchaudio=0.13.1
+  - pyg=2.3.0
   # utilities
   - pip
   - pip:
