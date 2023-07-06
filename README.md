@@ -5,7 +5,7 @@
 [![RDKit badge](https://img.shields.io/badge/Powered%20by-RDKit-3838ff.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAFVBMVEXc3NwUFP8UPP9kZP+MjP+0tP////9ZXZotAAAAAXRSTlMAQObYZgAAAAFiS0dEBmFmuH0AAAAHdElNRQfmAwsPGi+MyC9RAAAAQElEQVQI12NgQABGQUEBMENISUkRLKBsbGwEEhIyBgJFsICLC0iIUdnExcUZwnANQWfApKCK4doRBsKtQFgKAQC5Ww1JEHSEkAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wMy0xMVQxNToyNjo0NyswMDowMDzr2J4AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDMtMTFUMTU6MjY6NDcrMDA6MDBNtmAiAAAAAElFTkSuQmCC)](https://www.rdkit.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![DOI:10.1000/XXX-X-XX-XXX-X_X](https://zenodo.org/badge/DOI/10.1000/XXX-X-XX-XXX-X_X.svg)](https://doi.org/10.1000/XXX-X-XX-XXX-X_X)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8118845.svg)](https://doi.org/10.5281/zenodo.8118845)
 [![Citations](https://api.juleskreuer.eu/citation-badge.php?doi=10.1000/XXX-X-XX-XXX-X_X)](https://juleskreuer.eu/projekte/citation-badge/)
 
 ![](lsfml/img/NCHEM-22102062A_figure1.png)
