@@ -176,9 +176,8 @@ The software was developed at ETH Zurich and is licensed by the MIT license, i.e
 @article{nippa_atz2022enabling,
   title={Enabling late-stage drug diversification by high-throughput experimentation with geometric deep learning},
   author={Nippa, David F. and Atz, Kenneth and Hohler, Remo and M{\"u}ller, Alex T. and Marx, Andreas and Bartelmus, Christian and Wuitschik, Georg and Marzuoli, Irene and Jost, Vera and Wolfard, Jens and Binder, Martin and Stepan, Antonia F. and Konrad, David B. and Grether, Uwe and Martin, Rainer E. and Schneider, Gisbert},
-  journal={},
-  year={}
+  journal={Nature Chemistry},
+  year={2023}
 }
-To Do: To be updated with DOI and journal.
 ```
 
